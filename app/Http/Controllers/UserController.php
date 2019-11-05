@@ -82,7 +82,7 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->role_id = $request->input('role_id');
-        $user->department_id = $request->input('department_id');
+        $user->dept_id = $request->input('department_id');
         $user->picture = $fileNameToStore;
         $user->save();
         return redirect('/user')->with('success', 'User Added Successfull'); 
@@ -108,7 +108,12 @@ class UserController extends Controller
     public function edit($id)
     {
        $user = User::find($id);
-        return view('pages.user.edit')->with('user',$user);
+       $data = [
+            'user' => User::find($id),
+            'roles' => Role::pluck('name','id'),
+            'departments' => Department::pluck('name','id'),
+        ];
+        return view('pages.user.edit')->with($data);
     }
 
     /**
@@ -122,7 +127,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:ord_users',
+            'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6|confirmed',
             'role_id' => 'required|numeric|max:99',
             'department_id' => 'required|numeric|max:99',
@@ -151,6 +156,8 @@ class UserController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
+        $user->role_id = $request->input('role_id');
+        $user->dept_id = $request->input('department_id');
         $user->picture = $fileNameToStore;
         $user->save();
         return redirect('/user')->with('success', 'User Added Successfull'); 

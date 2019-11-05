@@ -35,7 +35,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="../UI/general.html">
+                                <a href="{{ url('user')}}">
                                     <i class="fa fa-circle-o"></i> View User
                                 </a>
                             </li>

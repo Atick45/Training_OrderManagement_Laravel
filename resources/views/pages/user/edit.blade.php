@@ -23,54 +23,69 @@
     </div>
     <!-- /.box-header -->
     <!-- form start -->
-    <form role="form" action="{{ url('user/'.$user->id) }}" method="POST">
+    <form role="form" action="{{ url('user/'.$user->id) }}" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
-        <input type="hidden" name="_method" value="PUT">
+        {{ method_field('PUT') }}
+
         <div class="box-body">
             <div class="form-group">
                 <label for="name">User Name</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
                 @if ($errors->has('name'))
-                    <p class="help-block text-danger">
-                        <small class="text-danger">{{ $errors->first('name') }}</small>
-                    </p>
+                <p class="help-block text-danger">
+                    <small class="text-danger">{{ $errors->first('name') }}</small>
+                </p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}">
                 @if ($errors->has('email'))
-                    <p class="help-block text-danger">
-                        <small class="text-danger">{{ $errors->first('email') }}</small>
-                    </p>
+                <p class="help-block text-danger">
+                    <small class="text-danger">{{ $errors->first('email') }}</small>
+                </p>
                 @endif
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" id="password" value="{{ $user->password }}">
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                 @if ($errors->has('password'))
-                    <p class="help-block text-danger">
-                        <small class="text-danger">{{ $errors->first('password') }}</small>
-                    </p>
+                <p class="help-block text-danger">
+                    <small class="text-danger">{{ $errors->first('password') }}</small>
+                </p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="password_confirmation">Confirm Password</label>
-                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" value="{{ $user->password_confirmation }}">
+                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password">
             </div>
             <div class="form-group">
-                 <label for="role">Role </label>
-	                 <select class="form-control" name="role_id" id="role"> 
-	                 	   <option value="{{$role_id}}">{{$user->$role}}</option>
-	                 </select>
+                <label for="role">Role </label>
+                <select class="form-control" name="role_id">
+                    @foreach($roles as $role_id => $role)
+                    <option value="{{$role_id}}">{{$role}}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('role_id'))
+                <p class="help-block text-danger">
+                    <small class="text-danger">{{ $errors->first('role_id') }}</small>
+                </p>
+                @endif
             </div>
 
             <div class="form-group">
-                 <label>Department </label>
-	                 <select class="form-control" name="department_id"> 
-	                 	   <option>{{$user->null}}</option>
-	                 </select>
+                <label>Department </label>
+                <select class="form-control" name="department_id">
+                    @foreach($departments as $dept_id => $dept)
+                    <option value="{{$dept_id}}">{{$dept}}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('department_id'))
+                    <p class="help-block text-danger">
+                        <small class="text-danger">{{ $errors->first('department_id') }}</small>
+                    </p>
+                @endif
             </div>
             <div class="form-group">
                 <label for="exampleInputFile">File input</label>
