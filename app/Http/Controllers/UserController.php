@@ -82,7 +82,7 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->role_id = $request->input('role_id');
-        $user->dept_id = $request->input('department_id');
+        $user->department_id = $request->input('department_id');
         $user->picture = $fileNameToStore;
         $user->save();
         return redirect('/user')->with('success', 'User Added Successfull'); 
