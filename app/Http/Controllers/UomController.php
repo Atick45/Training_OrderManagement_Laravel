@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Department;
-use App\User;
-
-class DepartmentController extends Controller
+use App\Uom;
+class UomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +13,10 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::with('user')->orderBy('id','DESC')->paginate(2);
-        return view('pages.department.show')->with('departments', $departments);
+        $uoms = Uom::with('user')->orderBy('id','DESC')->paginate(2);
+        return view('pages.uom.show')->with('uoms',$uoms);
+    
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -26,8 +24,8 @@ class DepartmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {			
-        return view('pages.department.create');
+    {
+        return view('pages.uom.create');
     }
 
     /**
@@ -43,13 +41,13 @@ class DepartmentController extends Controller
             'description' => 'required|max:200',
         ]);
 
-        $department = new Department;
-        $department->name = $request->input('name');
-        $department->description = $request->input('description');
-        $department->user_id = auth()->user()->id;
-        $department->save();
+        $uom = new Uom;
+        $uom->name = $request->input('name');
+        $uom->description = $request->input('description');
+        $uom->user_id = auth()->user()->id;
+        $uom->save();
 
-        return redirect('department')->with('success','Department Created successfully');
+        return redirect('uom')->with('success','Uom Created successfully');
     }
 
     /**
@@ -71,8 +69,8 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        $department = Department::find($id);
-        return view('pages.department.edit')->with('department',$department);
+        $uom = Uom::find($id);
+        return view('pages.uom.edit')->with('uom',$uom);
     }
 
     /**
@@ -89,15 +87,14 @@ class DepartmentController extends Controller
             'description' => 'required|max:200',
         ]);
 
-        $department = Department::find($id);
-        $department->name = $request->input('name');
-        $department->description = $request->input('description');
-        $department->user_id = auth()->user()->id;
-        $department->save();
+        $uom = Uom::find($id);
+        $uom->name = $request->input('name');
+        $uom->description = $request->input('description');
+        $uom->user_id = auth()->user()->id;
+        $uom->save();
 
-        return redirect('department')->with('success','Department Updated successfully');
+        return redirect('uom')->with('success','Uom Update successfully');
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -106,9 +103,9 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-         $department = Department::find($id);
-        $department->delete();
+        $uom = Uom::find($id);
+        $uom->delete();
 
-        return redirect('department')->with('success','Department Delete successfully');
+        return redirect('uom')->with('success','Unit Of Measurement Delete successfully');
     }
 }

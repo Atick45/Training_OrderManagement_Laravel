@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Department;
-use App\User;
+use App\Producttype;
 
-class DepartmentController extends Controller
+class ProducttypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +14,10 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::with('user')->orderBy('id','DESC')->paginate(2);
-        return view('pages.department.show')->with('departments', $departments);
+        $producttypes = Producttype::with('user')->orderBy('id','DESC')->paginate(2);
+        return view('pages.producttype.show')->with('producttypes',$producttypes);
+        
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -26,8 +25,8 @@ class DepartmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {			
-        return view('pages.department.create');
+    {
+       return view('pages.producttype.create');
     }
 
     /**
@@ -38,18 +37,18 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate( $request,[
+       $this->validate( $request,[
             'name' => 'required|max:200',
             'description' => 'required|max:200',
         ]);
 
-        $department = new Department;
-        $department->name = $request->input('name');
-        $department->description = $request->input('description');
-        $department->user_id = auth()->user()->id;
-        $department->save();
+        $producttype = new Producttype;
+        $producttype->name = $request->input('name');
+        $producttype->description = $request->input('description');
+        $producttype->user_id = auth()->user()->id;
+        $producttype->save();
 
-        return redirect('department')->with('success','Department Created successfully');
+        return redirect('producttype')->with('success','Producttype Created successfully');
     }
 
     /**
@@ -71,8 +70,8 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        $department = Department::find($id);
-        return view('pages.department.edit')->with('department',$department);
+        $producttype = Producttype::find($id);
+        return view('pages.producttype.edit')->with('producttype',$producttype);
     }
 
     /**
@@ -89,13 +88,13 @@ class DepartmentController extends Controller
             'description' => 'required|max:200',
         ]);
 
-        $department = Department::find($id);
-        $department->name = $request->input('name');
-        $department->description = $request->input('description');
-        $department->user_id = auth()->user()->id;
-        $department->save();
+        $producttype = Producttype::find($id);
+        $producttype->name = $request->input('name');
+        $producttype->description = $request->input('description');
+        $producttype->user_id = auth()->user()->id;
+        $producttype->save();
 
-        return redirect('department')->with('success','Department Updated successfully');
+        return redirect('producttype')->with('success','Producttype Update successfully');
     }
 
     /**
@@ -106,9 +105,9 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-         $department = Department::find($id);
-        $department->delete();
+        $producttype = Producttype::find($id);
+        $producttype->delete();
 
-        return redirect('department')->with('success','Department Delete successfully');
+        return redirect('producttype')->with('success','Producttype Delete successfully');
     }
 }

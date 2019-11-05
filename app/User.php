@@ -14,6 +14,12 @@ class User extends Authenticatable
      *
      * @var array
      */
+    public $primaryKey = 'id';
+
+
+    public $timestamps = true;
+
+    
     protected $fillable = [
         'name', 'email', 'password',
     ];
@@ -40,5 +46,37 @@ class User extends Authenticatable
 	 public function department(){
         return $this->belongsTo('App\Department');
     }
+
+    public function producttypes(){
+        return $this->hasMany('App\Producttype');
+    }
+	public function producttype(){
+        return $this->belongsTo('App\Producttype');
+    }
+
+    public function suppliers(){
+        return $this->hasMany('App\Supplier');
+    }
+
+    public function supplier(){
+        return $this->belongsTo('App\Supplier');
+    }
+
+    public function uoms(){
+        return $this->hasMany('App\Uom');
+    }
+
+    public function uom(){
+        return $this->belongsTo('App\Uom');
+    }
+
+    public function products(){
+        return $this->hasMany('App\Product');
+    }
+
+    public function product(){
+        return $this->belongsTo('App\Product');
+    }
+
 
 }

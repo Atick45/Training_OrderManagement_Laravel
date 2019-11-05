@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Department;
-use App\User;
-
-class DepartmentController extends Controller
+use App\Supplier;
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +13,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::with('user')->orderBy('id','DESC')->paginate(2);
-        return view('pages.department.show')->with('departments', $departments);
+        $suppliers = Supplier::with('user')->orderBy('id','DESC')->paginate(2);
+        return view('pages.supplier.show')->with('suppliers',$suppliers);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -26,8 +23,8 @@ class DepartmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {			
-        return view('pages.department.create');
+    {
+        return view("pages.supplier.create");
     }
 
     /**
@@ -38,18 +35,18 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate( $request,[
+       $this->validate( $request,[
             'name' => 'required|max:200',
             'description' => 'required|max:200',
         ]);
 
-        $department = new Department;
-        $department->name = $request->input('name');
-        $department->description = $request->input('description');
-        $department->user_id = auth()->user()->id;
-        $department->save();
+        $supplier = new Supplier;
+        $supplier->name = $request->input('name');
+        $supplier->description = $request->input('description');
+        $supplier->user_id = auth()->user()->id;
+        $supplier->save();
 
-        return redirect('department')->with('success','Department Created successfully');
+        return redirect('supplier')->with('success','Supplier Created successfully');
     }
 
     /**
@@ -71,8 +68,8 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        $department = Department::find($id);
-        return view('pages.department.edit')->with('department',$department);
+        $supplier = Supplier::find($id);
+        return view('pages.supplier.edit')->with('supplier',$supplier);
     }
 
     /**
@@ -89,13 +86,13 @@ class DepartmentController extends Controller
             'description' => 'required|max:200',
         ]);
 
-        $department = Department::find($id);
-        $department->name = $request->input('name');
-        $department->description = $request->input('description');
-        $department->user_id = auth()->user()->id;
-        $department->save();
+        $supplier = Supplier::find($id);
+        $supplier->name = $request->input('name');
+        $supplier->description = $request->input('description');
+        $supplier->user_id = auth()->user()->id;
+        $supplier->save();
 
-        return redirect('department')->with('success','Department Updated successfully');
+        return redirect('supplier')->with('success','Supplier Update successfully');
     }
 
     /**
@@ -106,9 +103,9 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-         $department = Department::find($id);
-        $department->delete();
+         $supplier = Supplier::find($id);
+        $supplier->delete();
 
-        return redirect('department')->with('success','Department Delete successfully');
+        return redirect('supplier')->with('success','Supplier Delete successfully');
     }
 }

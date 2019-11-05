@@ -28,6 +28,14 @@ Route::resource('/user', 'UserController');
 
 Route::resource('department', 'DepartmentController');
 
+Route::resource('/producttype', 'ProducttypeController');
+
+Route::resource('/supplier', 'SupplierController');
+
+Route::resource('/product', 'ProductController');
+
+Route::resource('/uom', 'UomController');
+
 Auth::routes();
 
 
