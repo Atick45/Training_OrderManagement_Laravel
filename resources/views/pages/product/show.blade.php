@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title','Show All Users')
+@section('title','Show All Products')
 
 @section('content-header')
 	<h1>
@@ -27,10 +27,11 @@
         <div class="box-body no-padding">
             <table class="table table-striped table-hover">
                 <tr>
+                    
                     <th style="width: 10px">#</th>
-                    <th>Picture</th>
                     <th>Product Name</th>
-                    <th>Description</th>                    
+                    <th>Description</th> 
+                    <th>Picture</th>                   
                     <th>UoM Name</th>
                     <th>Ptype Name</th>
                     
@@ -40,9 +41,9 @@
                 @foreach($products as $product)
                     <tr>
                         <td>{{ $product->id }}</td>
-                        <td style="width: 50px"><img style="width:100%" src="{{asset('uploads/users/'.$product->picture)}}" alt="" /></td>
                         <td>{{ $product->name }}</td>
-                        <td>{{ $product->email }}</td>
+                        <td>{{ $product->description }}</td>
+                        <td style="width: 50px"><img style="width:100%" src="{{asset('uploads/users/'.$product->picture)}}" alt="" /></td>
                         <td>{{ isset($product->uom->name) ? $product->uom->name : '' }}</td>
                         <td>{{ isset($product->producttype->name) ? $product->producttype->name : '' }}</td>
                          
@@ -58,7 +59,7 @@
                 @endforeach
             </table>
 
-            {{$users->links()}}
+            {{$products->links()}}
 
         </div>
 

@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
-@section('title','Create a new User')
+@section('title','Create a new Product')
 
 @section('header')
 <h1>
-    Create a new user
-    <small><a href="{{ url('user')}}">Preview</a></small>
+    Create a new product
+    <small><a href="{{ url('product')}}">Preview</a></small>
 </h1>
 <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -16,21 +16,21 @@
 
 @section('content')
 
-<!--Create User Start here -->
+<!--Create product Start here -->
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">Edit User</h3>
+        <h3 class="box-title">Edit product</h3>
     </div>
     <!-- /.box-header -->
     <!-- form start -->
-    <form role="form" action="{{ url('user/'.$user->id) }}" method="POST" enctype="multipart/form-data">
+    <form role="form" action="{{ url('product/'.$product->id) }}" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         {{ method_field('PUT') }}
 
         <div class="box-body">
             <div class="form-group">
-                <label for="name">User Name</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
+                <label for="name">product Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ $product->name }}">
                 @if ($errors->has('name'))
                 <p class="help-block text-danger">
                     <small class="text-danger">{{ $errors->first('name') }}</small>
@@ -38,52 +38,38 @@
                 @endif
             </div>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}">
-                @if ($errors->has('email'))
+                <label for="description">Product description</label>
+                <textarea class="form-control" name="description" id="description" rows="4">{{ $product->description }}</textarea>
+                @if ($errors->has('description'))
+                    <p class="help-block">
+                        <small class="text-danger">{{ $errors->first('description') }}</small>
+                    </p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="role">UOM </label>
+                <select class="form-control" name="uom_id">
+                    @foreach($uoms as $uom_id => $uom)
+                    <option value="{{$uom_id}}">{{$uom}}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('uom_id'))
                 <p class="help-block text-danger">
-                    <small class="text-danger">{{ $errors->first('email') }}</small>
+                    <small class="text-danger">{{ $errors->first('uom_id') }}</small>
                 </p>
                 @endif
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-                @if ($errors->has('password'))
-                <p class="help-block text-danger">
-                    <small class="text-danger">{{ $errors->first('password') }}</small>
-                </p>
-                @endif
-            </div>
-            <div class="form-group">
-                <label for="password_confirmation">Confirm Password</label>
-                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password">
-            </div>
-            <div class="form-group">
-                <label for="role">Role </label>
-                <select class="form-control" name="role_id">
-                    @foreach($roles as $role_id => $role)
-                    <option value="{{$role_id}}">{{$role}}</option>
+                <label>Product Type </label>
+                <select class="form-control" name="producttype_id">
+                    @foreach($producttypes as $producttype_id => $producttype)
+                    <option value="{{$producttype_id}}">{{$producttype}}</option>
                     @endforeach
                 </select>
-                @if ($errors->has('role_id'))
-                <p class="help-block text-danger">
-                    <small class="text-danger">{{ $errors->first('role_id') }}</small>
-                </p>
-                @endif
-            </div>
-
-            <div class="form-group">
-                <label>Department </label>
-                <select class="form-control" name="department_id">
-                    @foreach($departments as $dept_id => $dept)
-                    <option value="{{$dept_id}}">{{$dept}}</option>
-                    @endforeach
-                </select>
-                @if ($errors->has('department_id'))
+                @if ($errors->has('producttype_id'))
                     <p class="help-block text-danger">
-                        <small class="text-danger">{{ $errors->first('department_id') }}</small>
+                        <small class="text-danger">{{ $errors->first('producttype_id') }}</small>
                     </p>
                 @endif
             </div>

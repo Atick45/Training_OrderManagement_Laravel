@@ -18,8 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('name', 150);
             $table->text('description');
             $table->string('picture', 300);
-            $table->integer('uom_id');
-            $table->integer('producttype_id');
+            $table->integer('uom_id')->reference('id')->on('ord_uoms');
+            $table->integer('producttype_id')->reference('id')->on('ord_producttypes');
             $table->integer('user_id');
             $table->timestamps();
         });

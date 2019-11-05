@@ -47,7 +47,7 @@
 			<div class="form-group">
                 <label>UOM </label>
                 <select class="form-control" name="uom_id">
-                    @foreach($uoms as  $uom)
+                    @foreach($uoms as $uom_id => $uom)
                     <option value="{{$uom_id}}">{{$uom}}</option>
                     @endforeach
                 </select>
@@ -60,7 +60,7 @@
             <div class="form-group">
                 <label>Product Type  </label>
                 <select class="form-control" name="producttype_id">
-                    @foreach($producttypes as $producttype)
+                    @foreach($producttypes as $producttype_id => $producttype)
                     <option value="{{$producttype_id}}">{{$producttype}}</option>
                     @endforeach
                 </select>
