@@ -10,7 +10,28 @@
                     <i class="fa fa-dashboard"></i><span>Dashboard</span>
                 </a>
             </li>
-
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-pie-chart"></i>
+                    <span>Order Options</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="{{ url('order/create')}}">
+                            <i class="fa fa-circle-o"></i> Qucik Order
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('order')}}">
+                            <i class="fa fa-circle-o"></i> View Orders
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            {{-- end general options --}}
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-pie-chart"></i>
@@ -121,7 +142,7 @@
                             </li>
                         </ul>
                     </li>
-                    {{-- end Manage Category --}}                
+                    {{-- end Manage Category --}}
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-laptop"></i>

@@ -52,11 +52,9 @@ class ProductController extends Controller
             'image' => 'image|nullable|max:1900',
             'uom_id' => 'required|numeric|max:99',
             'producttype_id' => 'required|numeric|max:99'
-            
         ]);
 
-
-          //Handle File Upload
+        //Handle File Upload
         if($request->hasFile('image')){
             //Get filname with the extension
             $filenameWithExt = $request->file('image')->getClientOriginalName();
@@ -67,7 +65,7 @@ class ProductController extends Controller
             //Filename to store
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             //Upload Image
-            Input::file('image')->move('uploads/users', $fileNameToStore);
+            Input::file('image')->move('uploads/products', $fileNameToStore);
         } else {
             $fileNameToStore = 'nomiage.jpg';
         }
@@ -79,6 +77,7 @@ class ProductController extends Controller
         $product->uom_id = $request->input('uom_id');
         $product->producttype_id = $request->input('producttype_id');
         $product->picture = $fileNameToStore;
+        $product->user_id = auth()->user()->id;
         $product->save();
         return redirect('/product')->with('success', 'Product Added Successfull'); 
     }

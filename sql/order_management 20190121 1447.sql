@@ -1,7 +1,7 @@
 -- MySQL Administrator dump 1.4
 --
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.30-MariaDB
+-- Server version	5.7.23
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -94,15 +94,13 @@ CREATE TABLE `ord_order_details` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ord_order_details`
 --
 
 /*!40000 ALTER TABLE `ord_order_details` DISABLE KEYS */;
-INSERT INTO `ord_order_details` (`id`,`order_id`,`product_id`,`uom_id`,`qty`,`price`,`created_at`,`updated_at`) VALUES 
- (1,1,2,2,100.00,10.00,'2019-11-01 16:18:30','2019-11-01 16:18:30');
 /*!40000 ALTER TABLE `ord_order_details` ENABLE KEYS */;
 
 
@@ -121,15 +119,13 @@ CREATE TABLE `ord_orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `ord_orders`
 --
 
 /*!40000 ALTER TABLE `ord_orders` DISABLE KEYS */;
-INSERT INTO `ord_orders` (`id`,`suppliers_id`,`user_id`,`reference`,`total`,`remarks`,`created_at`,`updated_at`) VALUES 
- (1,2,2,'1234',1000.00,'good','2019-11-01 16:18:30','2019-11-01 16:18:30');
 /*!40000 ALTER TABLE `ord_orders` ENABLE KEYS */;
 
 
@@ -316,7 +312,7 @@ CREATE TABLE `ord_users` (
 /*!40000 ALTER TABLE `ord_users` DISABLE KEYS */;
 INSERT INTO `ord_users` (`id`,`name`,`email`,`password`,`remember_token`,`created_at`,`updated_at`,`role_id`,`dept_id`,`picture`) VALUES 
  (1,'Md. Robiul Islam','robi@email.com','$2y$10$E3HmJv8kyrdmFjMe53ESL.U8hLGNBHtWIdChgctGS.aEJFeocA9BC',NULL,'2019-01-05 16:34:27','2019-01-05 16:34:27',NULL,NULL,NULL),
- (2,'admin','admin@email.com','$2y$10$O044IVtTlAKHNE3MbDGx1e27TZJTTDOVBLoh65KO6e9Kp8./CeIMG','QyEiNeYIqeKeDBhqNOLnS49zeq8GHgZbo9h1Mmqk43GQTLFZP7onmD5JRm83','2019-01-12 14:16:44','2019-01-12 14:16:44',NULL,NULL,NULL),
+ (2,'admin','admin@email.com','$2y$10$O044IVtTlAKHNE3MbDGx1e27TZJTTDOVBLoh65KO6e9Kp8./CeIMG',NULL,'2019-01-12 14:16:44','2019-01-12 14:16:44',NULL,NULL,NULL),
  (3,'Shafiq','shafiq@email.com','$2y$10$U43UfJNBEG.9UelqnoEl1e5JtMW4E6mcOWDRr36xYun9cJJ.H8KNe','U1mDH3SuF2yj7NpaZav54VDBEPWrEIw7y9SadKNAWNVRZ5FBVAo2YTn8EKLx','2019-01-12 15:01:26','2019-01-21 05:57:12',1,1,'sumonAhmed_1548050232.jpg'),
  (4,'Atick Bokshi','atick@email.com','$2y$10$wL379BafW8j5b0ZrRFXTV.womlGuc3mqRnnu.S7DoFJzTLFPoJVpq',NULL,'2019-01-12 15:13:33','2019-01-12 15:13:33',1,1,'51uuxBaUBrL_1547306013.png'),
  (5,'robi','robi@gmail.com','$2y$10$BARAQ5G9fBsniTrecYVqT.ue9PZOmBJ2CN1vxR/Q/wn8/dykiVIMy',NULL,'2019-01-17 08:17:51','2019-01-17 09:28:33',1,1,'slide01_1547717313.jpg');
@@ -344,8 +340,7 @@ CREATE TABLE `sessions` (
 
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
 INSERT INTO `sessions` (`id`,`user_id`,`ip_address`,`user_agent`,`payload`,`last_activity`) VALUES 
- ('LxkLK4w4CA8GDmoqfJqQ4xwNYV4fleR31OeYUqkN',NULL,'::1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiTjNqOUZreHhmUzA4YklyTTFmekxkbzNqb09pT0I0Y1l2YlQ5TGhrRCI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo1MzoiaHR0cDovL2xvY2FsaG9zdC9sYXJhdmVsL29yZGVybWFuYWdlbWVudC04LjAuMC9wdWJsaWMiO31zOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czo1MzoiaHR0cDovL2xvY2FsaG9zdC9sYXJhdmVsL29yZGVybWFuYWdlbWVudC04LjAuMC9wdWJsaWMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19',1572623370),
- ('b95CZIjCrAFgRelUhwauVy8phrZUHDU1PefbC1tG',2,'::1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36','YTo1OntzOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjY6Il90b2tlbiI7czo0MDoiVm05UDJMZUVHdkJUaHRhc0xlMUJsWGlYUjJWVE5FeEE2aERodE50dyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjUzOiJodHRwOi8vbG9jYWxob3N0L2xhcmF2ZWwvb3JkZXJtYW5hZ2VtZW50LTguMC4wL3B1YmxpYyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7fQ==',1572626695);
+ ('h3BbuGHBMo4eFcn6WfTEJfOJOIvhQNOGXF2V8VDX',NULL,'::1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36','YTo0OntzOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjY6Il90b2tlbiI7czo0MDoibW9ETzh3UDFabmN6cTVXY1FIRE5sVTl2RGFGZjVrOGJrTEowM0FBaCI7czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo0OToiaHR0cDovL3N1bW9uLmRlL2F0aWsvb3JkZXJtYW5hZ2VtZW50LTcuMC4wL3B1YmxpYyI7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjU1OiJodHRwOi8vc3Vtb24uZGUvYXRpay9vcmRlcm1hbmFnZW1lbnQtNy4wLjAvcHVibGljL2xvZ2luIjt9fQ==',1548060199);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 
 

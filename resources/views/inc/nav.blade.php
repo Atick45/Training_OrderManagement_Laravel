@@ -2,9 +2,9 @@
     <!-- Logo -->
     <a href="{{asset('index2.html')}}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>A</b>LT</span>
-        <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Admin</b>LTE</span>
+        <span class="logo-mini"><b>ORM</b></span>
+        
+        <span class="logo-lg"><b>ORD-</b>Management</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -107,16 +107,15 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{asset('assets/dist/img/user2-160x160.jpg')}}" class="user-image" alt="User Image">
-                        <span class="hidden-xs">Atick Bokshi</span>
+                        <img src="{{asset('uploads/users/'.auth()->user()->picture)}}" class="user-image" alt="User Image">
+                        <span class="hidden-xs">{{ auth()->user()->name }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="{{asset('assets/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
-
+                            <img src="{{asset('uploads/users/'.auth()->user()->picture) }}" class="img-circle" alt="User Image">
                             <p>
-                                Atick Bokshi - Web Developer
+                                {{ auth()->user()->name }} - Web Developer
                                 <small>Member since Nov. 2018</small>
                             </p>
                         </li>
