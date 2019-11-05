@@ -24,7 +24,7 @@ Route::middleware('auth')->group( function(){
 
 });
 
-Route::resource('user', 'UserController');
+Route::resource('/user', 'UserController');
 
 Route::resource('department', 'DepartmentController');
 

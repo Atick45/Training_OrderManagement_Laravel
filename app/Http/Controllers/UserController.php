@@ -107,7 +107,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+       $user = User::find($id);
+        return view('pages.user.edit')->with('user',$user);
     }
 
     /**
@@ -119,7 +120,40 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:ord_users',
+            'password' => 'required|string|min:6|confirmed',
+            'role_id' => 'required|numeric|max:99',
+            'department_id' => 'required|numeric|max:99',
+            'image' => 'image|nullable|max:1900'
+        ]);
+
+
+          //Handle File Upload
+        if($request->hasFile('image')){
+            //Get filname with the extension
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            //Get just ext
+            $extension = $request->file('image')->getClientOriginalExtension();
+            //Filename to store
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            //Upload Image
+            Input::file('image')->move('uploads/users', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'nomiage.jpg';
+        }
+        
+        //Create User
+        $user = User::find($id);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->picture = $fileNameToStore;
+        $user->save();
+        return redirect('/user')->with('success', 'User Added Successfull'); 
     }
 
     /**

@@ -71,7 +71,7 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        $role = Department::find($id);
+        $department = Department::find($id);
         return view('pages.department.edit')->with('department',$department);
     }
 
