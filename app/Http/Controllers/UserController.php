@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Input;
 use App\Role;
 use App\User;
+use App\Department;
+
+
 class UserController extends Controller
 {
     /**
@@ -14,8 +20,9 @@ class UserController extends Controller
      */
     public function index()
     {
-		
-         return view('pages.user.create');
+        $users = User::with(['role','department'])->orderBy('id','DESC')->paginate(2);
+       // dd($users);
+        return view('pages.user.show')->with('users',$users);
     }
 
     /**
@@ -25,17 +32,10 @@ class UserController extends Controller
      */
     public function create()
     {	
-	
-		
-	//departments also Created
+	    //departments also Created
 		$data = [
 			'roles' => Role::pluck('name','id'),
-			//'departments' => Department::pluck('name','id'),
-			'departments' => [
-				'1' => 'Accounts',
-				'2' => 'Production',
-				'3' => 'Store',
-			],
+			'departments' => Department::pluck('name','id'),
 		];
 		//end of departments
 		
@@ -51,9 +51,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:ord_users',
             'password' => 'required|string|min:6|confirmed',
+            'role_id' => 'required|numeric|max:99',
+            'department_id' => 'required|numeric|max:99',
             'image' => 'image|nullable|max:1900'
         ]);
 
@@ -69,18 +71,18 @@ class UserController extends Controller
             //Filename to store
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             //Upload Image
-            $path = $request->file('image')->storeAs('public/user_images', $fileNameToStore);
+            Input::file('image')->move('uploads/users', $fileNameToStore);
         } else {
-            $fileNameToStore = 'nomiage>jpg';
+            $fileNameToStore = 'nomiage.jpg';
         }
-
         
         //Create User
         $user = new User;
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
-        $user->role_id = $request->input('role');
+        $user->role_id = $request->input('role_id');
+        $user->dept_id = $request->input('department_id');
         $user->picture = $fileNameToStore;
         $user->save();
         return redirect('/user')->with('success', 'User Added Successfull'); 

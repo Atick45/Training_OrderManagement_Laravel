@@ -23,46 +23,70 @@
     </div>
     <!-- /.box-header -->
     <!-- form start -->
-    <form role="form" action="{{ url('user') }}" method="POST">
+    <form role="form" action="{{ url('user') }}" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="box-body">
             <div class="form-group">
-                <label for="exampleInputUSER">User Name</label>
-                <input type="text" class="form-control" id="exampleInputUSER" name="name" placeholder="Enter username">
+                <label for="name">User Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Enter username">
+                @if ($errors->has('name'))
+                    <p class="help-block text-danger">
+                        <small class="text-danger">{{ $errors->first('name') }}</small>
+                    </p>
+                @endif
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Email</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter username">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" name="email" placeholder="Enter username">
+                @if ($errors->has('email'))
+                    <p class="help-block text-danger">
+                        <small class="text-danger">{{ $errors->first('email') }}</small>
+                    </p>
+                @endif
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                @if ($errors->has('password'))
+                    <p class="help-block text-danger">
+                        <small class="text-danger">{{ $errors->first('password') }}</small>
+                    </p>
+                @endif
             </div>
             <div class="form-group">
-                <label for="password-confirm">Confirm Password</label>
-                <input type="password" class="form-control" name="password-confirm" id="password-confirm" placeholder="Enter Confirm Password">
+                <label for="password_confirmation">Confirm Password</label>
+                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Enter Confirm Password">
             </div>
             <div class="form-group">
                 <label>Role </label>
-                <select class="form-control">
+                <select class="form-control" name="role_id">
                     @foreach($roles as $role_id => $role)
                     <option value="{{$role_id}}">{{$role}}</option>
                     @endforeach
                 </select>
+                @if ($errors->has('role_id'))
+                    <p class="help-block text-danger">
+                        <small class="text-danger">{{ $errors->first('role_id') }}</small>
+                    </p>
+                @endif
             </div>
             <div class="form-group">
                 <label>Department </label>
-                <select class="form-control">
+                <select class="form-control" name="department_id">
                     @foreach($departments as $dept_id => $dept)
                     <option value="{{$dept_id}}">{{$dept}}</option>
                     @endforeach
                 </select>
+                @if ($errors->has('department_id'))
+                    <p class="help-block text-danger">
+                        <small class="text-danger">{{ $errors->first('department_id') }}</small>
+                    </p>
+                @endif
             </div>
             <div class="form-group">
                 <label for="exampleInputFile">File input</label>
                 <input type="file" id="exampleInputFile" name="image">
-
                 <p class="help-block">Example block-level help text here.</p>
             </div>
         </div>

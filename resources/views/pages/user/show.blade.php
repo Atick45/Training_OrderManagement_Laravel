@@ -21,7 +21,6 @@
 	<div class="box-header">
 		<h3 class="box-title">Show Users Table</h3>
 	</div><!-- /.box-header -->
-	@include('inc.messages')
 
 	<!-- /.box-header -->
     @if(count($users) > 0)
@@ -40,7 +39,7 @@
                 @foreach($users as $user)
                     <tr>
                         <td>{{ $user->id }}</td>
-                        <td style="width: 50px"><img style="width:100%" src="{{asset('storage/user_images/'.$user->picture)}}" alt="" /></td>
+                        <td style="width: 50px"><img style="width:100%" src="{{asset('uploads/users/'.$user->picture)}}" alt="" /></td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ isset($user->role->name) ? $user->role->name : '' }}</td>

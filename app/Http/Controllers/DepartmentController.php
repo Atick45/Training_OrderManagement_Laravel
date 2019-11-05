@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Department;
+use App\User;
+
 class DepartmentController extends Controller
 {
     /**
@@ -14,7 +16,7 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::with('user')->orderBy('id','DESC')->paginate(2);
-        return view('pages.department.show')->with('department',$department);
+        return view('pages.department.show')->with('departments', $departments);
     }
 
 
