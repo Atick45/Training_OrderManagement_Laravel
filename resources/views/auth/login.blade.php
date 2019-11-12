@@ -10,7 +10,7 @@
 			</span>
 			<form class="login100-form validate-form p-b-33 p-t-5" method="POST" action="{{ route('login') }}">
 				{{ csrf_field() }}
-				<div class="wrap-input100 validate-input" data-validate = "Enter username">
+				<div class="wrap-input100 validate-input {{ $errors->has('email') ? ' has-error' : '' }}" data-validate = "Enter username">
 					<input class="input100" type="email" name="email" value="{{ old('email') }}" required autofocus>
 					@if ($errors->has('email'))
                         <span class="help-block px-5">
@@ -31,7 +31,7 @@
 				<div class="form-group px-5 pt-3">
 					<div class="checkbox">
                         <label>
-                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                            <input type="checkbox" name="remember" class="{{ old('remember') ? 'checked' : '' }}"> Remember Me
                         </label>
                     </div>
                     <a class="btn btn-link" href="{{ route('password.request') }}">
@@ -46,6 +46,8 @@
 					Login
 					</button>
 				</div>
+				<p class="text-center">UserName: admin@email.com</p>
+				<p class="text-center">Password: 12345678</p>
 			</form>
 		</div>
 	</div>

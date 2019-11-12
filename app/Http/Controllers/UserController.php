@@ -159,7 +159,7 @@ class UserController extends Controller
         $user->role_id = $request->input('role_id');
         $user->dept_id = $request->input('department_id');
         $user->picture = $fileNameToStore;
-        $user->save();
+        $user->update();
         return redirect('/user')->with('success', 'User Added Successfull'); 
     }
 
