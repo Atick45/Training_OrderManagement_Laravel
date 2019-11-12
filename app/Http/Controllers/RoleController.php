@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Role;
 
 
 class RoleController extends Controller
 {
+    private $roles = "ord_roles";
+    private $users = "ord_users";
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +18,12 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::with('user')->orderBy('id','DESC')->paginate(2);
+        // $roles = Role::with('ord_users')->orderBy('id','DESC')->paginate(2);
+        $roles = DB::table($this->roles)
+        ->join($this->users, $this->roles. '.user_id', '=', $this->users.'.id')
+        ->select($this->roles.'.*', $this->users.'.name')
+        ->orderBy($this->roles.'.created_at','desc')
+        ->paginate(5);
         return view('pages.role.show')->with('roles',$roles);
     }
 
@@ -43,7 +51,7 @@ class RoleController extends Controller
         ]);
 
         $role = new Role;
-        $role->name = $request->input('name');
+        $role->role_name = $request->input('name');
         $role->description = $request->input('description');
         $role->user_id = auth()->user()->id;
         $role->save();
@@ -89,7 +97,7 @@ class RoleController extends Controller
         ]);
 
         $role = Role::find($id);
-        $role->name = $request->input('name');
+        $role->role_name = $request->input('name');
         $role->description = $request->input('description');
         $role->user_id = auth()->user()->id;
         $role->save();

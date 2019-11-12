@@ -34,9 +34,9 @@
                 @foreach($departments as $department)
                     <tr>
                         <td>{{ $department->id }}</td>
-                        <td>{{ $department->name }}</td>
+                        <td>{{ $department->dept_name }}</td>
                         <td>{{ $department->description }}</td>
-                        <td>{{ $department->user->name }}</td>
+                        <td>{{ $department->dept_name }}</td>
                         <td>
                             <a href="{{ url('department/'.$department->id.'/edit') }}" class="btn btn-default">edit</a>
                             <form class="pull-right" action="{{ url('department/'.$department->id) }}}" method="POST">

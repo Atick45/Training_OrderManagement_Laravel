@@ -34,9 +34,9 @@
                 @foreach($roles as $role)
                     <tr>
                         <td>{{ $role->id }}</td>
-                        <td>{{ $role->name }}</td>
+                        <td>{{ $role->role_name }}</td>
                         <td>{{ $role->description }}</td>
-                        <td>{{ $role->user->name }}</td>
+                        <td>{{ $role->name }}</td>
                         <td>
                             <a href="{{ url('role/'.$role->id.'/edit') }}" class="btn btn-default">edit</a>
                             <form class="pull-right" action="{{ url('role/'.$role->id) }}}" method="POST">

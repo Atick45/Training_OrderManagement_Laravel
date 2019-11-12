@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Department;
-use App\User;
 
 class DepartmentController extends Controller
 {
+     private $departments = "ord_departments";
+    private $users = "ord_users";
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +16,12 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::with('user')->orderBy('id','DESC')->paginate(2);
+        // $departments = Department::with('user')->orderBy('id','DESC')->paginate(2);
+        $departments = DB::table($this->departments)
+        ->join($this->users, $this->departments. '.user_id', '=', $this->users.'.id')
+        ->select($this->departments.'.*', $this->users.'.name')
+        ->orderBy($this->departments.'.created_at','desc')
+        ->paginate(5);
         return view('pages.department.show')->with('departments', $departments);
     }
 
@@ -44,7 +50,7 @@ class DepartmentController extends Controller
         ]);
 
         $department = new Department;
-        $department->name = $request->input('name');
+        $department->dept_name = $request->input('name');
         $department->description = $request->input('description');
         $department->user_id = auth()->user()->id;
         $department->save();
@@ -90,7 +96,7 @@ class DepartmentController extends Controller
         ]);
 
         $department = Department::find($id);
-        $department->name = $request->input('name');
+        $department->dept_name = $request->input('name');
         $department->description = $request->input('description');
         $department->user_id = auth()->user()->id;
         $department->save();

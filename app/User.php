@@ -33,37 +33,21 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function roles(){
-        return $this->hasMany('App\Role');
-    }
 	 public function role(){
         return $this->belongsTo('App\Role');
     }
 
-    public function departments(){
-        return $this->hasMany('App\Department');
-    }
 	 public function department(){
         return $this->belongsTo('App\Department');
     }
 
-    public function producttypes(){
+	public function producttype(){
         return $this->hasMany('App\Producttype');
     }
-	public function producttype(){
-        return $this->belongsTo('App\Producttype');
-    }
 
-    public function suppliers(){
-        return $this->hasMany('App\Supplier');
-    }
 
     public function supplier(){
         return $this->belongsTo('App\Supplier');
-    }
-
-    public function uoms(){
-        return $this->hasMany('App\Uom');
     }
 
     public function uom(){

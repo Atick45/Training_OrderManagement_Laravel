@@ -29,7 +29,7 @@
         <div class="box-body">
             <div class="form-group">
                 <label for="name">Department name</label>
-                <input type="text" name="name" class="form-control" id="name" value="{{ $role->name }}">
+                <input type="text" name="name" class="form-control" id="name" value="{{ $department->dept_name }}">
                 @if ($errors->has('name'))
                     <p class="help-block text-danger">
                         <small class="text-danger">{{ $errors->first('name') }}</small>
@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label for="description">Department description</label>
-                <textarea class="form-control" name="description" id="description" rows="4">{{ $role->description }}</textarea>
+                <textarea class="form-control" name="description" id="description" rows="4">{{ $department->description }}</textarea>
                 @if ($errors->has('description'))
                     <p class="help-block">
                         <small class="text-danger">{{ $errors->first('description') }}</small>
