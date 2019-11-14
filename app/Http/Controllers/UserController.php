@@ -8,20 +8,30 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use App\User;
+use App\Role;
 use App\Department;
 
 
 class UserController extends Controller
 {
+     private $departments = "ord_departments";
+      private $roles = "ord_roles";
+     private $users = "ord_users";
     /**
      * Display a listing of the resource.
-     *
+     *id, name, email, password, remember_token, created_at, updated_at, role_id, dept_id, picture
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $users = User::with(['role','department'])->orderBy('id','DESC')->paginate(2);
+        // $users = User::with(['role','department'])->orderBy('id','DESC')->paginate(2);
        // dd($users);
+        $users = DB::table($this->users)
+            ->join($this->roles, $this->users. '.role_id', '=', $this->roles.'.id')
+            ->join($this->departments, $this->users.'.dept_id', '=', $this->departments.'.id')
+            ->select($this->users.'.*', $this->roles.'.role_name', $this->departments.'.dept_name')
+            ->orderBy($this->users.'.created_at','desc')
+            ->paginate(5);
         return view('pages.user.show')->with('users',$users);
     }
 
@@ -34,8 +44,8 @@ class UserController extends Controller
     {	
 	    //departments also Created
 		$data = [
-			'roles' => Role::pluck('name','id'),
-			'departments' => Department::pluck('name','id'),
+			'roles' => Role::pluck('role_name','id'),
+			'departments' => Department::pluck('dept_name','id'),
 		];
 		//end of departments
 		
@@ -44,7 +54,7 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     *id, name, email, password, remember_token, created_at, updated_at, role_id, dept_id, picture
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -76,16 +86,18 @@ class UserController extends Controller
             $fileNameToStore = 'nomiage.jpg';
         }
         
-        //Create User
-        $user = new User;
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-        $user->role_id = $request->input('role_id');
-        $user->dept_id = $request->input('department_id');
-        $user->picture = $fileNameToStore;
-        $user->save();
-        return redirect('/user')->with('success', 'User Added Successfull'); 
+        DB::table($this->users)->insert(
+            [
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'role_id' => $request->input('role_id'),
+                'dept_id' => $request->input('department_id'),
+                'picture' => $fileNameToStore,
+                'created_at' => DB::raw('now()')
+            ]
+        );      
+          return redirect('/user')->with('success', 'User Added Successfull'); 
     }
 
     /**
@@ -110,8 +122,8 @@ class UserController extends Controller
        $user = User::find($id);
        $data = [
             'user' => User::find($id),
-            'roles' => Role::pluck('name','id'),
-            'departments' => Department::pluck('name','id'),
+            'roles' => Role::pluck('role_name','id'),
+            'departments' => Department::pluck('dept_name','id'),
         ];
         return view('pages.user.edit')->with($data);
     }
@@ -135,7 +147,7 @@ class UserController extends Controller
         ]);
 
 
-          //Handle File Upload
+          //Handle File Uploadid, name, email, password, remember_token, created_at, updated_at, role_id, dept_id, picture
         if($request->hasFile('image')){
             //Get filname with the extension
             $filenameWithExt = $request->file('image')->getClientOriginalName();
@@ -147,20 +159,35 @@ class UserController extends Controller
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             //Upload Image
             Input::file('image')->move('uploads/users', $fileNameToStore);
+
+            DB::table($this->users)->where('id', $id)->update(
+                [
+                    'name' => $request->input('name'),
+                    'email' => $request->input('email'),
+                    'password' => Hash::make($request->input('password')),
+                    'role_id' => $request->input('role_id'),
+                    'dept_id' => $request->input('department_id'),
+                    'picture' => $fileNameToStore,
+                    'updated_at' => DB::raw('now()')
+
+                ]
+            );
+
         } else {
-            $fileNameToStore = 'nomiage.jpg';
+            DB::table($this->users)->where('id', $id)->update(
+                [
+                    'name' => $request->input('name'),
+                    'email' => $request->input('email'),
+                    'password' => Hash::make($request->input('password')),
+                    'role_id' => $request->input('role_id'),
+                    'dept_id' => $request->input('department_id'),
+                    'picture' => $fileNameToStore,
+                    'updated_at' => DB::raw('now()')
+                ]
+            );
         }
-        
-        //Create User
-        $user = User::find($id);
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-        $user->role_id = $request->input('role_id');
-        $user->dept_id = $request->input('department_id');
-        $user->picture = $fileNameToStore;
-        $user->update();
-        return redirect('/user')->with('success', 'User Added Successfull'); 
+
+        return redirect('/user')->with('success', 'User Update Successfull'); 
     }
 
     /**

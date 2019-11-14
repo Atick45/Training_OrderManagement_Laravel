@@ -15,7 +15,7 @@ class CreateUomsTable extends Migration
     {
         Schema::create('ord_uoms', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 150);
+            $table->string('uom_name', 150);
             $table->text('description');
             $table->integer('user_id');
             $table->timestamps();

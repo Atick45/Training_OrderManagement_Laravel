@@ -8,17 +8,31 @@ use Illuminate\Support\Facades\Input;
 use App\Product;
 use App\Uom;
 use App\Producttype;
+
 class ProductController extends Controller
 {
+     private $producttypes = "ord_producttypes";
+    private $uoms = "ord_uoms";
+    private $products = "ord_products";
     /**
-     * Display a listing of the resource.
-     *
+     * Display a listing of the resource
+
+     id, name, description, picture, ord_uom_id, ord_producttype_id, user_id, created_at, updated_at
+     *id, name, description, picture, uom_id, producttype_id, user_id, created_at, updated_at
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $products = Product::with(['uom','producttype'])->orderBy('id','DESC')->paginate(2);
+        // $products = Product::with(['uom','producttype'])->orderBy('id','DESC')->paginate(10);
        // dd($users);
+
+        $products = DB::table($this->products)
+        ->join($this->producttypes, $this->products. '.producttype_id', '=', $this->producttypes.'.id')
+        ->join($this->uoms, $this->products. '.uom_id', '=', $this->uoms.'.id')
+        ->select($this->products.'.*', $this->producttypes.'.ptype_name', $this->uoms.'.uom_name')
+        ->orderBy($this->products.'.created_at','desc')
+        ->paginate(5);
+
         return view('pages.product.show')->with('products',$products);
     }
 
@@ -30,8 +44,8 @@ class ProductController extends Controller
     public function create()
     {
         $data = [
-            'uoms' => Uom::pluck('name','id'),
-            'producttypes' => Producttype::pluck('name','id'),
+            'uoms' => Uom::pluck('uom_name','id'),
+            'producttypes' => Producttype::pluck('ptype_name','id'),
         ];
         //end of departments
         
@@ -104,8 +118,8 @@ class ProductController extends Controller
         $product = Product::find($id);
        $data = [
             'product' => Product::find($id),
-            'uoms' => Uom::pluck('name','id'),
-            'producttypes' => Producttype::pluck('name','id'),
+            'uoms' => Uom::pluck('uom_name','id'),
+            'producttypes' => Producttype::pluck('ptype_name','id'),
         ];
         return view('pages.product.edit')->with($data);
     }
@@ -152,7 +166,7 @@ class ProductController extends Controller
         $product->uom_id = $request->input('uom_id');
         $product->producttype_id = $request->input('producttype_id');
         $product->picture = $fileNameToStore;
-        $product->save();
+        $product->update();
         return redirect('/product')->with('success', 'Product Update Successfull'); 
     }
 

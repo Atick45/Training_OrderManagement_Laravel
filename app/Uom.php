@@ -20,15 +20,4 @@ class Uom extends Model
         return $this->belongsTo('App\User');
     }
 
-   public function users(){
-       return $this->hasMany('App\User');
-   }
-
-   public function product(){
-        return $this->belongsTo('App\Product');
-    }
-
-   public function products(){
-       return $this->hasMany('App\Product');
-   }
 }

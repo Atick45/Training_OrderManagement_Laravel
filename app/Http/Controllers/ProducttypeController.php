@@ -1,19 +1,30 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Producttype;
 
 class ProducttypeController extends Controller
 {
+    private $producttypes = "ord_producttypes";
+    private $users = "ord_users";
     /**
      * Display a listing of the resource.
-     *
+     *ptype_name
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $producttypes = Producttype::with('user')->orderBy('id','DESC')->paginate(2);
+        // $producttypes = Producttype::with('user')->orderBy('id','DESC')->paginate(2);
+
+     $producttypes = DB::table($this->producttypes)
+        ->join($this->users, $this->producttypes. '.user_id', '=', $this->users.'.id')
+        ->select($this->producttypes.'.*', $this->users.'.name')
+        ->orderBy($this->producttypes.'.created_at','desc')
+        ->paginate(5);
+
         return view('pages.producttype.show')->with('producttypes',$producttypes);
         
     }
@@ -42,7 +53,7 @@ class ProducttypeController extends Controller
         ]);
 
         $producttype = new Producttype;
-        $producttype->name = $request->input('name');
+        $producttype->ptype_name = $request->input('name');
         $producttype->description = $request->input('description');
         $producttype->user_id = auth()->user()->id;
         $producttype->save();
@@ -88,7 +99,7 @@ class ProducttypeController extends Controller
         ]);
 
         $producttype = Producttype::find($id);
-        $producttype->name = $request->input('name');
+        $producttype->ptype_name = $request->input('name');
         $producttype->description = $request->input('description');
         $producttype->user_id = auth()->user()->id;
         $producttype->save();

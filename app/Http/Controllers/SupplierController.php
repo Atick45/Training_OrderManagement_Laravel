@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Supplier;
 class SupplierController extends Controller
 {
+    private $suppliers = "ord_suppliers";
+    private $users = "ord_users";
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +15,13 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = Supplier::with('user')->orderBy('id','DESC')->paginate(2);
+        // $suppliers = Supplier::with('user')->orderBy('id','DESC')->paginate(2);
+        
+        $suppliers = DB::table($this->suppliers)
+        ->join($this->users, $this->suppliers. '.user_id', '=', $this->users.'.id')
+        ->select($this->suppliers.'.*', $this->users.'.name')
+        ->orderBy($this->suppliers.'.created_at','desc')
+        ->paginate(5); 
         return view('pages.supplier.show')->with('suppliers',$suppliers);
     }
 
@@ -41,7 +49,7 @@ class SupplierController extends Controller
         ]);
 
         $supplier = new Supplier;
-        $supplier->name = $request->input('name');
+        $supplier->supp_name = $request->input('name');
         $supplier->description = $request->input('description');
         $supplier->user_id = auth()->user()->id;
         $supplier->save();
@@ -87,7 +95,7 @@ class SupplierController extends Controller
         ]);
 
         $supplier = Supplier::find($id);
-        $supplier->name = $request->input('name');
+        $supplier->supp_name = $request->input('name');
         $supplier->description = $request->input('description');
         $supplier->user_id = auth()->user()->id;
         $supplier->save();

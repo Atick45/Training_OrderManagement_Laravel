@@ -87,7 +87,6 @@
             <div class="form-group">
                 <label for="exampleInputFile">File input</label>
                 <input type="file" id="exampleInputFile" name="image">
-                <p class="help-block">Example block-level help text here.</p>
             </div>
         </div>
         <!-- /.box-body -->

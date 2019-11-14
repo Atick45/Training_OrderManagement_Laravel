@@ -42,7 +42,7 @@
                         <td style="width: 50px"><img style="width:100%" src="{{asset('uploads/users/'.$user->picture)}}" alt="" /></td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>{{ isset($user->role->name) ? $user->role->name : '' }}</td>
+                        <td>{{ isset($user->role_name) ? $user->role_name : '' }}</td>
                         
                          
                         <td>

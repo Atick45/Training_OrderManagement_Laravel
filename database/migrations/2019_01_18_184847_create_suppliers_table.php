@@ -15,7 +15,7 @@ class CreateSuppliersTable extends Migration
     {
         Schema::create('ord_suppliers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 150);
+            $table->string('supp_name', 150);
             $table->text('description');
             $table->integer('user_id');
             $table->timestamps();

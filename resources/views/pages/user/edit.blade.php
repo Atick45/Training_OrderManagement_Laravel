@@ -76,14 +76,14 @@
 
             <div class="form-group">
                 <label>Department </label>
-                <select class="form-control" name="department_id">
+                <select class="form-control" name="dept_id">
                     @foreach($departments as $dept_id => $dept)
                     <option value="{{$dept_id}}">{{$dept}}</option>
                     @endforeach
                 </select>
-                @if ($errors->has('department_id'))
+                @if ($errors->has('dept_id'))
                     <p class="help-block text-danger">
-                        <small class="text-danger">{{ $errors->first('department_id') }}</small>
+                        <small class="text-danger">{{ $errors->first('dept_id') }}</small>
                     </p>
                 @endif
             </div>

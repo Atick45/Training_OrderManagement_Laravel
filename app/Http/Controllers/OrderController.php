@@ -13,14 +13,26 @@ use App\OrderDetails;
 
 class OrderController extends Controller
 {
+    private $uoms = "ord_uoms";
+    private $products = "ord_products";
+    private $suppliers = "ord_suppliers";
+    private $data = "ord_order_details";
     /**
-     * Display a listing of the resource.
+    /**
+     * Display a listing of the resource. 
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $data = DB::table($this->data)
+        ->join($this->products, $this->data. '.product_id', '=', $this->products.'.id')
+        ->join($this->uoms, $this->data. '.uom_id', '=', $this->uoms.'.id')
+        ->select($this->data.'.*', $this->products.'.name', $this->uoms.'.uom_name')
+        ->orderBy($this->data.'.created_at','desc')
+        ->paginate(5);
+
+        return view('pages.order.order_create')->with($data);
     }
 
     /**
@@ -32,7 +44,7 @@ class OrderController extends Controller
     {
         $data = [
             'products' => Product::pluck('name','id'),
-            'uoms' => Uom::pluck('name','id'),
+            'uoms' => Uom::pluck('uom_name','id'),
         ];
         //dd($data);
         return view('pages.order.order_create')->with($data);
@@ -165,7 +177,7 @@ class OrderController extends Controller
     public function checkout()
     {
         $data = [
-            'suppliers' => Supplier::pluck('name','id'),
+            'suppliers' => Supplier::pluck('supp_name','id'),
         ];
         return view('pages.order.checkout')->with($data);
     }

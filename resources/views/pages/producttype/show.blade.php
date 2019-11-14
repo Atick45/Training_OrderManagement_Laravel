@@ -34,9 +34,9 @@
                 @foreach($producttypes as $producttype)
                     <tr>
                         <td>{{ $producttype->id }}</td>
-                        <td>{{ $producttype->name }}</td>
+                        <td>{{ $producttype->ptype_name }}</td>
                         <td>{{ $producttype->description }}</td>
-                        <td>{{ $producttype->user->name }}</td>
+                        <td>{{ $producttype->name }}</td>
                         <td>
                             <a href="{{ url('producttype/'.$producttype->id.'/edit') }}" class="btn btn-default">edit</a>
                             <form class="pull-right" action="{{ url('producttype/'.$producttype->id) }}}" method="POST">

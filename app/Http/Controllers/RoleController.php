@@ -19,16 +19,17 @@ class RoleController extends Controller
     public function index()
     {
         // $roles = Role::with('ord_users')->orderBy('id','DESC')->paginate(2);
-        $roles = DB::table($this->roles)
+     $roles = DB::table($this->roles)
         ->join($this->users, $this->roles. '.user_id', '=', $this->users.'.id')
         ->select($this->roles.'.*', $this->users.'.name')
         ->orderBy($this->roles.'.created_at','desc')
         ->paginate(5);
+        
         return view('pages.role.show')->with('roles',$roles);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource.id, dept_name, description, user_id, created_at, updated_at updated_at
      *
      * @return \Illuminate\Http\Response
      */

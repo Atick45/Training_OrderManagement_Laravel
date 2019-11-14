@@ -29,7 +29,7 @@
         <div class="box-body">
             <div class="form-group">
                 <label for="name">Unit Of Measurement name</label>
-                <input type="text" name="name" class="form-control" id="name" value="{{ $uom->name }}">
+                <input type="text" name="name" class="form-control" id="name" value="{{ $uom->uom_name }}">
                 @if ($errors->has('name'))
                     <p class="help-block text-danger">
                         <small class="text-danger">{{ $errors->first('name') }}</small>

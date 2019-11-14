@@ -34,9 +34,9 @@
                 @foreach($suppliers as $supplier)
                     <tr>
                         <td>{{ $supplier->id }}</td>
-                        <td>{{ $supplier->name }}</td>
+                        <td>{{ $supplier->supp_name }}</td>
                         <td>{{ $supplier->description }}</td>
-                        <td>{{ $supplier->user->name }}</td>
+                        <td>{{ $supplier->name }}</td>
                         <td>
                             <a href="{{ url('supplier/'.$supplier->id.'/edit') }}" class="btn btn-default">edit</a>
                             <form class="pull-right" action="{{ url('supplier/'.$supplier->id) }}}" method="POST">

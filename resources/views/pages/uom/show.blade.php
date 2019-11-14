@@ -34,9 +34,9 @@
                 @foreach($uoms as $uom)
                     <tr>
                         <td>{{ $uom->id }}</td>
-                        <td>{{ $uom->name }}</td>
+                        <td>{{ $uom->uom_name }}</td>
                         <td>{{ $uom->description }}</td>
-                        <td>{{ $uom->user->name }}</td>
+                        <td>{{ $uom->name }}</td>
                         <td>
                             <a href="{{ url('uom/'.$uom->id.'/edit') }}" class="btn btn-default">edit</a>
                             <form class="pull-right" action="{{ url('uom/'.$uom->id) }}}" method="POST">

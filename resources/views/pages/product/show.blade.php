@@ -44,8 +44,8 @@
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->description }}</td>
                         <td style="width: 50px"><img style="width:100%" src="{{asset('uploads/products/'.$product->picture)}}" alt="" /></td>
-                        <td>{{ isset($product->uom->name) ? $product->uom->name : '' }}</td>
-                        <td>{{ isset($product->producttype->name) ? $product->producttype->name : '' }}</td>
+                        <td>{{ isset($product->uom_name) ? $product->uom_name : '' }}</td>
+                        <td>{{ isset($product->ptype_name) ? $product->ptype_name : '' }}</td>
                          
                         <td>
                             <a href="{{ url('product/'.$product->id.'/edit') }}" class="btn btn-default">edit</a>
